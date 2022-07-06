@@ -25,19 +25,19 @@ extension UIColor {
 		)
 	}
 	
-	public func compareColor(_ color:UIColor) -> Bool{
-		var red:CGFloat = 0
-		var green:CGFloat  = 0
-		var blue:CGFloat = 0
-		var alpha:CGFloat  = 0
-		self.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
-
-		var red2:CGFloat = 0
-		var green2:CGFloat  = 0
-		var blue2:CGFloat = 0
-		var alpha2:CGFloat  = 0
-		color.getRed(&red2, green: &green2, blue: &blue2, alpha: &alpha2)
-
-		return (Int(green*255) == Int(green2*255))
-	}
+//	public func compareColor(_ color:UIColor) -> Bool{
+//		var red:CGFloat = 0
+//		var green:CGFloat  = 0
+//		var blue:CGFloat = 0
+//		var alpha:CGFloat  = 0
+//		self.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+//
+//		var red2:CGFloat = 0
+//		var green2:CGFloat  = 0
+//		var blue2:CGFloat = 0
+//		var alpha2:CGFloat  = 0
+//		color.getRed(&red2, green: &green2, blue: &blue2, alpha: &alpha2)
+//
+//		return (Int(green*255) == Int(green2*255))
+//	}
 }

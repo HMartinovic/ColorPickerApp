@@ -11,6 +11,7 @@
 		79949E002865BF02007B0B7B /* ButtonColorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79949DFF2865BF02007B0B7B /* ButtonColorType.swift */; };
 		79949E022865C22D007B0B7B /* ColorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79949E012865C22D007B0B7B /* ColorCollectionViewCell.swift */; };
 		79949E052865C41A007B0B7B /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79949E042865C41A007B0B7B /* UIColor.swift */; };
+		7995F1AD2875AF2900AFA617 /* UIHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7995F1AC2875AF2900AFA617 /* UIHelpers.swift */; };
 		79961D40286487CD004CD88F /* CustomColorPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79961D3F286487CD004CD88F /* CustomColorPickerViewController.swift */; };
 		79961D4228649010004CD88F /* ColorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79961D4128649010004CD88F /* ColorService.swift */; };
 		79FE7D5928646AF400E5304A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FE7D5828646AF400E5304A /* AppDelegate.swift */; };
@@ -28,6 +29,7 @@
 		79949DFF2865BF02007B0B7B /* ButtonColorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonColorType.swift; sourceTree = "<group>"; };
 		79949E012865C22D007B0B7B /* ColorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCollectionViewCell.swift; sourceTree = "<group>"; };
 		79949E042865C41A007B0B7B /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		7995F1AC2875AF2900AFA617 /* UIHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHelpers.swift; sourceTree = "<group>"; };
 		79961D3F286487CD004CD88F /* CustomColorPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColorPickerViewController.swift; sourceTree = "<group>"; };
 		79961D4128649010004CD88F /* ColorService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorService.swift; sourceTree = "<group>"; };
 		79FE7D5528646AF400E5304A /* ColorPickerApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ColorPickerApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -96,6 +98,14 @@
 			name = ViewControllers;
 			sourceTree = "<group>";
 		};
+		7995F1AB2875AF1200AFA617 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				7995F1AC2875AF2900AFA617 /* UIHelpers.swift */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
 		79FE7D4C28646AF400E5304A = {
 			isa = PBXGroup;
 			children = (
@@ -117,6 +127,7 @@
 		79FE7D5728646AF400E5304A /* ColorPickerApp */ = {
 			isa = PBXGroup;
 			children = (
+				7995F1AB2875AF1200AFA617 /* Helpers */,
 				79949E072865C501007B0B7B /* ViewControllers */,
 				79949E062865C48A007B0B7B /* Services */,
 				79949E032865C403007B0B7B /* Extensions */,
@@ -253,6 +264,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				798E1C132869D04A00FA44B3 /* LoadViewController.swift in Sources */,
+				7995F1AD2875AF2900AFA617 /* UIHelpers.swift in Sources */,
 				79961D40286487CD004CD88F /* CustomColorPickerViewController.swift in Sources */,
 				79949E022865C22D007B0B7B /* ColorCollectionViewCell.swift in Sources */,
 				79949E002865BF02007B0B7B /* ButtonColorType.swift in Sources */,

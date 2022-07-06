@@ -9,17 +9,16 @@ import UIKit
 import SnapKit
 
 class MainViewController: UIViewController {
-	
-	let sampleLabel = UITextField()
+	private let sampleLabel = UILabel()
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
-		view.backgroundColor = .white
-		
+		setUI()
+	}
+	
+	private func setUI() {
 		let content = UIStackView()
 		view.addSubview(content)
-		content.backgroundColor = .white
 		content.axis = .vertical
 		content.distribution = .fillEqually
 		content.alignment = .center
@@ -28,49 +27,36 @@ class MainViewController: UIViewController {
 		}
 		
 		content.addArrangedSubview(sampleLabel)
-		sampleLabel.textColor = .black
-		sampleLabel.backgroundColor = UIColor.white
 		sampleLabel.text = ColorData.instance.sampleText
 		
 		let textColor = generateRandomColor(usedArray: ColorData.instance.textColors)
-		print("loading colors")
 		sampleLabel.textColor = textColor
 		sampleLabel.backgroundColor = generateRandomColor(usedArray: ColorData.instance.backgroundColors, textColor)
 		
-		[("Set background color", ColorPickerTypeEnum.BackgroundColor),("Set text color", ColorPickerTypeEnum.TextColor)].forEach { (title, colorPickerType) in
-			let btn = generateButtonColorType(title: title, colorPickerType: colorPickerType)
-			content.addArrangedSubview(btn)
-		}
+		let buttonTextColor = generateButtonColorType(title: "Set text color", colorPickerType: .TextColor)
+		content.addArrangedSubview(buttonTextColor)
+		
+		let buttonBackgroundColor = generateButtonColorType(title: "Set background color", colorPickerType: .BackgroundColor)
+		content.addArrangedSubview(buttonBackgroundColor)
 	}
 	
-	func generateRandomColor(usedArray:[UIColor], _ forbiddenColor:UIColor? = nil, _ failSafe:Int = 1) -> UIColor {
-		if usedArray.count == 0 { fatalError("test todo") }
-		
-		var randomIndex = Int.random(in: 0..<usedArray.count)
-		var randomColor = usedArray[randomIndex]
-		
-		if forbiddenColor != nil && forbiddenColor!.compareColor(randomColor) {
-			if failSafe > 9 {
-				randomIndex = randomIndex + (randomIndex == (usedArray.count - 1) ? -1 : 1)
-				randomColor = usedArray[randomIndex]
-			}
-			else {
-				return generateRandomColor(usedArray: usedArray, forbiddenColor, failSafe + 1)
-			}
+	private func generateRandomColor(usedArray:[UIColor], _ forbiddenColor:UIColor? = nil, _ failSafe:Int = 1) -> UIColor {
+		let filteredArray = usedArray.filter { color in
+			color != forbiddenColor
 		}
 		
-		return randomColor
+		return filteredArray.randomElement() ?? UIColor.clear
 	}
 	
-	func generateButtonColorType(title:String, colorPickerType:ColorPickerTypeEnum) -> ButtonColorType {
-		let btn = ButtonColorType(colorPickerType: colorPickerType)
-		btn.setTitle(title, for: .normal)
-		btn.setTitleColor(.black, for: .normal)
-		btn.addTarget(self, action: #selector(btnChangeColor_click(_:)), for: .touchUpInside)
-		return btn
+	private func generateButtonColorType(title:String, colorPickerType:ColorPickerTypeEnum) -> ButtonColorType {
+		let button = ButtonColorType(colorPickerType: colorPickerType)
+		button.setTitle(title, for: .normal)
+		button.setTitleColor(.black, for: .normal)
+		button.addTarget(self, action: #selector(changeSampleLabelColor(_:)), for: .touchUpInside)
+		return button
 	}
 	
-	@objc func btnChangeColor_click(_ sender:ButtonColorType){
+	@objc func changeSampleLabelColor(_ sender:ButtonColorType){
 		let customColorPickerController = CustomColorPickerViewController(colorPickerType: sender.ColorPickerType)
 		customColorPickerController.colorPickerDelegate = self
 		
@@ -86,8 +72,6 @@ class MainViewController: UIViewController {
 extension MainViewController : ColorPickerDelegate {
 	func changeColor(color: UIColor, colorPickerType: ColorPickerTypeEnum) {
 		switch colorPickerType {
-		case .None:
-			print("no color picker type")
 		case .TextColor:
 			self.sampleLabel.textColor = color
 		case .BackgroundColor:
@@ -97,6 +81,6 @@ extension MainViewController : ColorPickerDelegate {
 	
 	func isColorAllowed(color: UIColor, colorPickerType: ColorPickerTypeEnum) -> Bool {
 		let textColor = colorPickerType == .TextColor ? sampleLabel.backgroundColor! : sampleLabel.textColor!
-		return !textColor.compareColor(color)
+		return textColor != color
 	}
 }

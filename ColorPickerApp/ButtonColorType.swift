@@ -6,15 +6,14 @@
 //
 import UIKit
 
-class ButtonColorType : UIButton
-{
-	private var colorPickerType = ColorPickerTypeEnum.None
-	
+class ButtonColorType : UIButton {
+	private var colorPickerType : ColorPickerTypeEnum
 	var ColorPickerType : ColorPickerTypeEnum { get { return colorPickerType } }
 	
 	init(colorPickerType:ColorPickerTypeEnum){
-		super.init(frame: .zero)
 		self.colorPickerType = colorPickerType
+		
+		super.init(frame: .zero)
 	}
 	
 	required init?(coder: NSCoder) {

@@ -9,35 +9,28 @@ import Foundation
 import UIKit
 
 class ColorService{
-	func loadData(completion: @escaping (Error?) -> ()) {
+	public static let instance = ColorService()
+	
+	func loadData(completion: @escaping (Bool) -> ()) {
 		guard let url = URL(string: "https://d2t41j3b4bctaz.cloudfront.net/interview.json") else { return }
 		
 		let task = URLSession.shared.dataTask(with: url) { data, urlResponse, error in
 			guard let data = data else { return }
+			var taskComplete = false
+			
 			do{
 				let jsonStr = String(data: data, encoding: .utf8)!
 				let jsonData = Data(jsonStr.utf8)
 				let dataInfo = try JSONDecoder().decode(DataInfo.self, from:jsonData)
-				print(dataInfo)
 				
-				dataInfo.colors.textColors.forEach { stringHex in
-					ColorData.instance.textColors.append(UIColor(stringHex: stringHex))
-				}
-				dataInfo.colors.backgroundColors.forEach { stringHex in
-					ColorData.instance.backgroundColors.append(UIColor(stringHex: stringHex))
-				}
-				ColorData.instance.sampleText = dataInfo.title
-				
-				completion(error)
-			}
-			catch{
-				print(error)
-			}
+				ColorData.instance.loadData(dataInfo)
+				taskComplete = true
+			} catch{ }
+			
+			completion(taskComplete)
 		}
 		task.resume()
 	}
-	
-	public static let instance = ColorService()
 }
 
 struct DataInfo : Codable {
@@ -59,12 +52,20 @@ class ColorData {
 	
 	var textColors = [UIColor]()
 	var backgroundColors = [UIColor]()
-	var sampleText : String!
+	var sampleText : String?
 	
-	func getColors(colorPickerType:ColorPickerTypeEnum) -> Array<UIColor> {
+	func loadData(_ dataInfo:DataInfo) {
+		dataInfo.colors.textColors.forEach { stringHex in
+			ColorData.instance.textColors.append(UIColor(stringHex: stringHex))
+		}
+		dataInfo.colors.backgroundColors.forEach { stringHex in
+			ColorData.instance.backgroundColors.append(UIColor(stringHex: stringHex))
+		}
+		ColorData.instance.sampleText = dataInfo.title
+	}
+	
+	func getColors(colorPickerType:ColorPickerTypeEnum) -> [UIColor] {
 		switch colorPickerType {
-		case .None:
-			return []
 		case .TextColor:
 			return textColors
 		case .BackgroundColor:
@@ -73,4 +74,4 @@ class ColorData {
 	}
 }
 
-enum ColorPickerTypeEnum { case None, TextColor, BackgroundColor }
+enum ColorPickerTypeEnum { case TextColor, BackgroundColor }
